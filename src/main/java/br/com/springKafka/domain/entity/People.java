@@ -1,4 +1,4 @@
-package br.com.springKafka.domain.dto.entity;
+package br.com.springKafka.domain.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 

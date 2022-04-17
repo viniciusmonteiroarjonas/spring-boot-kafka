@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "b3cbfdc3-41de-4e8b-8dae-976cbb16637c",
+		"name": "spring-kafka",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "producer",
+			"item": [
+				{
+					"name": "Peoples",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Vinicius Monteiro Arjonas\",\n    \"cpf\": \"123456789\",\n    \"books\": [\n        \"Harry Potter\",\n        \"Animais Fantasticos\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/peoples",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"peoples"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Verificar ID brocker",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/v3/clusters/",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v3",
+						"clusters",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar topico",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.api+json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/vnd.api+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"attributes\": {\r\n            \"topic_name\": \"topic-now\",\r\n            \"partitions_count\": 2,\r\n            \"replication_factor\": 1,\r\n            \"configs\": []\r\n        }\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/v3/clusters/TRVY600cTEKNJCPtsLfkJQ/topics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v3",
+						"clusters",
+						"TRVY600cTEKNJCPtsLfkJQ",
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verificar topicos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/v3/clusters/TRVY600cTEKNJCPtsLfkJQ/topics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v3",
+						"clusters",
+						"TRVY600cTEKNJCPtsLfkJQ",
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enviar mensagem no topico",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.kafka.json.v2+json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/vnd.kafka.v2+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"records\": [\r\n        {\r\n            \"key\": \"0\",\r\n            \"value\": \"Mensagem enviada 01\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/topics/topic-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"topics",
+						"topic-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar grupo e consumidor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.kafka.v2+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"consumidor1\",\r\n    \"format\": \"json\",\r\n    \"auto.offset.reset\": \"earliest\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/consumers/consumer-group-01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"consumers",
+						"consumer-group-01"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registrar consumidor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/vnd.kafka.v2+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"topics\":[\"topic-now\"]}"
+				},
+				"url": {
+					"raw": "http://localhost:8082/consumers/consumer-group-01/instances/consumidor1/subscription",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"consumers",
+						"consumer-group-01",
+						"instances",
+						"consumidor1",
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consumir mensagens",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/vnd.kafka.json.v2+json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8082/consumers/consumer-group-01/instances/consumidor1/records",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"consumers",
+						"consumer-group-01",
+						"instances",
+						"consumidor1",
+						"records"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
