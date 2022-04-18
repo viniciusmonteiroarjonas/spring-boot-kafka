@@ -1,10 +1,11 @@
 package br.com.springKafka.controller;
 
-import br.com.springKafka.People;
 import br.com.springKafka.domain.dto.PeopleDTO;
 import br.com.springKafka.kafka.producer.PeopleProducer;
+import br.com.springkafka.People;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class PeopleController {
 
     private final PeopleProducer peopleProducer;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> sendMessage(@RequestBody PeopleDTO peopleDTO) {
         var id = UUID.randomUUID().toString();
         var message = People.newBuilder()

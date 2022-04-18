@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "People",
-  "namespace": "br.com.springKafka",
+  "namespace": "br.com.springkafka",
   "fields": [
     {
       "name": "id",
