@@ -18,7 +18,9 @@ public class People {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
+
     private String name;
+
     private String cpf;
 
     @OneToMany(mappedBy = "people", cascade = CascadeType.ALL)
